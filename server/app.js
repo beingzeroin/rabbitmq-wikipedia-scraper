@@ -7,7 +7,7 @@ const port = process.env.PORT || 5000
 const wiki = require('./handlers/wikiScraper')
 const email = require('./handlers/emailHandler')
 const db = require('./database/databaseFunctions')
-const rabbitMQ = require('./rabbitmq/config')
+const rabbitMQ = require('./rabbitmq/producer')
 
 
 db.createTables()
@@ -15,13 +15,13 @@ db.createTables()
 app.use(cors())
 app.use(morgan('tiny'))
 
-function processEmailRequest () {
-    scrapeWiki()
+function processEmailRequest (email) {
+    scrapeWiki(email)
         // .then(results => sendEmail(results, 'prescott.henning@gmail.com'))
 }
 
-function scrapeWiki () {
-    rabbitMQ.publishScrapeRequest()
+function scrapeWiki (email) {
+    rabbitMQ.publishScrapeRequest(email)
 }
 
 function sendEmail (results, emailAddress) {
@@ -29,7 +29,7 @@ function sendEmail (results, emailAddress) {
     return results
 }
 
-const loop = setInterval(processEmailRequest, 2000)
+processEmailRequest('prescott.henning@gmail.com')
 
 
 app.listen(port)

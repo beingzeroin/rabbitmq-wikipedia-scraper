@@ -4,7 +4,7 @@ const fetch = require('node-fetch')
 const URL = 'https://en.wikipedia.org/wiki/Special:Random'
 let searchURL = ''
 
-function scrapeWikipedia () {
+function scrapeWikipedia (message) {
     return fetch(URL)
     .then(response => {
         searchURL = response.url

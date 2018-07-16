@@ -33,8 +33,8 @@ function publishEmailMessage (html, emailAddress) {
       rabbot.publish('e.email', { type: 'Email Request', body: {html, emailAddress} })
 }
 
-function publishScrapeRequest () {
-    rabbot.publish('e.scrape', { type: 'Scrape Request', body: 'heres a scrape request to be processed' })
+function publishScrapeRequest (email) {
+    rabbot.publish('e.scrape', { type: 'Scrape Request', body: {emailAddress: email} })
 }
 
 function publishDBMessage () {
