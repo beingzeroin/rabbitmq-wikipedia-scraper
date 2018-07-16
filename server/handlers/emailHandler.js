@@ -11,9 +11,9 @@ function sendEmail (mailHTML, emailAddress) {
             }
         })
         let mailOptions = {
-            from: '<craigslistbot>',
+            from: '<wikibot>',
             to: emailAddress,
-            subject: 'Craigslist Emailer',
+            subject: 'Wikipedia Random Emailer',
             html: mailHTML
         }
         transporter.sendMail(mailOptions, (error, info) => {
