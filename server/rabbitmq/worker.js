@@ -1,6 +1,7 @@
 const rabbot = require('rabbot')
 const wiki = require('../handlers/wikiScraper')
 const rabbitMQ = require('./producer')
+const mail = require('../handlers/emailHandler')
 
 rabbot.handle('DB Request', (message) => {
     console.log('received database task')
@@ -8,17 +9,12 @@ rabbot.handle('DB Request', (message) => {
 })
 
 rabbot.handle('Email Request', (message) => {
-    console.log('received email task', message.body)
+    mail.sendEmail(message.body.html, message.body.emailAddress)
     message.ack()
 })
 
-
-// Having problems passing the email address down from the message to pass it on to the next rabbit queue
 rabbot.handle('Scrape Request', (message) => {
-  let email = message.body.email
-  console.log(email)
-  process.end
-  // needs to scrape here and send results html body to email queue
+  let email = message.body.emailAddress
   wiki.scrapeWikipedia()
     .then(results => {
       rabbitMQ.publishEmailMessage(results, email)
