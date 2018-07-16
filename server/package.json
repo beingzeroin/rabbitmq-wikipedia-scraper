@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "pm2-runtime start ecosystem.config.js --env production"
   },
   "keywords": [],
   "author": "",
@@ -17,6 +17,8 @@
     "morgan": "^1.9.0",
     "node-fetch": "^2.1.2",
     "nodemailer": "^4.6.7",
-    "pg": "^7.4.3"
+    "pg": "^7.4.3",
+    "pm2": "^3.0.0",
+    "rabbot": "^2.1.0"
   }
 }
