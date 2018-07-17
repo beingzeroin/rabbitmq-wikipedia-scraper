@@ -16,6 +16,8 @@ RabbitMQ is used to queue scraping, emailing, and database reads/writes. PM2 is 
 
 ![alt text](https://raw.githubusercontent.com/brandonhenning/rabbitmq-wikipedia-scraper/master/screenshots/tech-stack.png)
 
+<img src="https://raw.githubusercontent.com/brandonhenning/rabbitmq-wikipedia-scraper/master/screenshots/tech-stack.png" align="left" width="400" height="200">
+
 #### Issues in Progress
 1) Find better ways to break the code, and make sure messages are being noacked to their respective queues if not processed correctly. 
 2) Add some persistant store for message ids, possibly uuid or Redis
