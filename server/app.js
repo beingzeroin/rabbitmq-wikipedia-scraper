@@ -17,19 +17,14 @@ app.use(morgan('tiny'))
 
 function processEmailRequest (email) {
     scrapeWiki(email)
-        // .then(results => sendEmail(results, 'prescott.henning@gmail.com'))
 }
 
 function scrapeWiki (email) {
     rabbitMQ.publishScrapeRequest(email)
+    rabbitMQ.publishDBMessage(email)
 }
 
-function sendEmail (results, emailAddress) {
-    email.sendEmail(results, emailAddress)
-    return results
-}
-
-processEmailRequest('prescott.henning@gmail.com')
+processEmailRequest('prescottbph@gmail.com')
 
 
 app.listen(port)
