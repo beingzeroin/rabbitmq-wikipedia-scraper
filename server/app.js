@@ -4,8 +4,6 @@ const morgan = require('morgan')
 const cors = require('cors')
 const app = express()
 const port = process.env.PORT || 5000
-const wiki = require('./handlers/wikiScraper')
-const email = require('./handlers/emailHandler')
 const db = require('./database/databaseFunctions')
 const rabbitMQ = require('./rabbitmq/producer')
 
