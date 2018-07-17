@@ -14,6 +14,7 @@ RabbitMQ is used to queue scraping, emailing, and database reads/writes. PM2 is 
 - [Nodemailer.js](https://nodemailer.com/about/) - npm library for sending emails from a Node.js server
 - [Vue.js](https://vuejs.org/) - front end framework used to build a simple client side application
 
+<!-- ![alt text](http://url/to/img.png) -->
 
 #### Issues in Progress
 1) Find better ways to break the code, and make sure messages are being noacked to their respective queues if not processed correctly. 
