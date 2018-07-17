@@ -24,8 +24,6 @@ function scrapeWiki (email) {
     rabbitMQ.publishDBMessage(email)
 }
 
-processEmailRequest('prescottbph@gmail.com')
-
 
 app.listen(port)
 

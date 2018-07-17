@@ -1,3 +1,4 @@
+require('dotenv').config()
 const rabbot = require('rabbot')
 const wiki = require('../handlers/wikiScraper')
 const rabbitMQ = require('./producer')
@@ -12,17 +13,23 @@ rabbot.handle('DB Request', (message) => {
 })
 
 rabbot.handle('Email Request', (message) => {
+  try {
     mail.sendEmail(message.body.html, message.body.emailAddress)
     message.ack()
+  } catch (error) {
+    message.nack()
+  }
 })
 
 rabbot.handle('Scrape Request', (message) => {
-  let email = message.body.emailAddress
-  wiki.scrapeWikipedia()
+  try {
+    let email = message.body.emailAddress
+    wiki.scrapeWikipedia()
     .then(results => {
-      rabbitMQ.publishEmailMessage(results, email)
-    })
-  message.ack()
+      rabbitMQ.publishEmailMessage(results, email)})
+      message.ack()
+  } catch (error) { message.nack()}
 })
+
 
 
