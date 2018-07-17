@@ -1,7 +1,7 @@
 # WikiMailer
 
 ## What This Is
-Node server-side application that accepts an email and then scrapes Wikipedia for a random article and emails the user with the results and stores the search in a Postgres database. 
+Node application that accepts an email and then scrapes Wikipedia for a random article and emails the user with the results and stores the search in a Postgres database. 
 
 RabbitMQ is used to queue scraping, emailing, and database reads/writes. PM2 is used to run both the Express server as well as the RabbitMQ servers from inside the same application and to provide load balancing. 
 
@@ -12,6 +12,7 @@ RabbitMQ is used to queue scraping, emailing, and database reads/writes. PM2 is 
 - [PostgreSQL](https://www.postgresql.org/) - Database
 - [Express](https://expressjs.com/) - Web server for receiving search requests
 - [Nodemailer.js](https://nodemailer.com/about/) - npm library for sending emails from a Node.js server
+- [Vue.js](https://vuejs.org/) - front end framework used to build a simple client side application
 
 
 #### Issues in Progress
