@@ -13,9 +13,11 @@ db.createTables()
 app.use(cors())
 app.use(morgan('tiny'))
 
-function processEmailRequest (email) {
-    scrapeWiki(email)
-}
+app.get('/:email', (request, response) => {
+    scrapeWiki(request.params.email)
+    return response.json({ message: 'Thank you! Your email is on the way!' })
+})
+
 
 function scrapeWiki (email) {
     rabbitMQ.publishScrapeRequest(email)

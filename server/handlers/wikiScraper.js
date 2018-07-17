@@ -27,8 +27,8 @@ function getResults (body) {
 
 function formatResultsToHTML (resultObject) {
     let bodyOfHTML = `<h3>${resultObject.heading}</h3>`
-    bodyOfHTML += `<a href>${resultObject.link}</a>`
-    bodyOfHTML += `<img src="${resultObject.images}"></img>`
+    bodyOfHTML += `<a href="${resultObject.link}">${resultObject.link}</a>`
+    bodyOfHTML += `<img src=${resultObject.images}></img>`
     bodyOfHTML += `<p>${resultObject.firstParagraph}</p>`
     return bodyOfHTML
 }
