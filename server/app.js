@@ -24,6 +24,8 @@ function scrapeWiki (email) {
     rabbitMQ.publishDBMessage(email)
 }
 
+scrapeWiki('test@poomail.net')
+
 
 app.listen(port)
 

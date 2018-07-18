@@ -23,6 +23,7 @@ rabbot.handle('Email Request', (message) => {
 
 rabbot.handle('Scrape Request', (message) => {
   try {
+    console.log(message.properties.messageId)
     let email = message.body.emailAddress
     wiki.scrapeWikipedia()
     .then(results => {
