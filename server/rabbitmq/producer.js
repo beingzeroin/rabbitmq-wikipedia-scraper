@@ -4,16 +4,22 @@ const uuid = require('uuid')
 
 
 
-function publishEmailMessage (html, emailAddress) {
-      rabbot.publish('e.email', { type: 'Email Request', body: {html, emailAddress}, messageId: uuid.v4() })
+async function publishEmailMessage (html, emailAddress) {
+    try {
+        await rabbot.publish('e.email', { type: 'Email Request', body: {html, emailAddress}, messageId: uuid.v4() })
+    } catch (error) {throw error}
 }
 
-function publishScrapeRequest (email) {
-    rabbot.publish('e.scrape', { type: 'Scrape Request', body: {emailAddress: email}, messageId: uuid.v4() })
+async function publishScrapeRequest (email) {
+    try {
+        await rabbot.publish('e.scrape', { type: 'Scrape Request', body: {emailAddress: email}, messageId: uuid.v4() })
+    } catch (error) {throw error}
 }
 
-function publishDBMessage (email) {
-    rabbot.publish('e.database', { type: 'DB Request', body: {email}, messageId: uuid.v4() })
+async function publishDBMessage (email) {
+    try {
+        await rabbot.publish('e.database', { type: 'DB Request', body: {email}, messageId: uuid.v4() })
+    } catch (error) {throw error}
 }
 
 module.exports = {

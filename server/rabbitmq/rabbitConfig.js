@@ -24,8 +24,8 @@ const setup = rabbot.configure({
     ],
     bindings: [
       { exchange: 'e.email', target: 'q.email', keys: [] },
-      { exchange: 'e.database', target: 'q.database', keys: [] },
       { exchange: 'e.scrape', target: 'q.scrape', keys: [] },
+      { exchange: 'e.database', target: 'q.database', keys: [] },
       { exchange: 'e.deadletter', target: 'q.deadletter', keys: [] }
     ]
   }).then(

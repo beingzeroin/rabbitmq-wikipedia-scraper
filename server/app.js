@@ -6,7 +6,6 @@ const app = express()
 const port = process.env.PORT || 5000
 const db = require('./database/databaseFunctions')
 const rabbitMQ = require('./rabbitmq/producer')
-const mail = require('./handlers/emailHandler')
 
 
 db.createTables()
@@ -19,13 +18,15 @@ app.get('/:email', (request, response) => {
     return response.json({ message: 'Thank you! Your email is on the way!' })
 })
 
-mail.welcomeEmail('prescott.henning@gmail.com')
 
-function scrapeWiki (email) {
-    rabbitMQ.publishScrapeRequest(email)
-    rabbitMQ.publishDBMessage(email)
+async function scrapeWiki (email) {
+    try {
+        await rabbitMQ.publishScrapeRequest(email)
+        await rabbitMQ.publishDBMessage(email)
+    } catch (error) {throw error}
 }
 
+scrapeWiki('prescottbph@gmail.com')
 
 
 
