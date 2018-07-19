@@ -26,9 +26,6 @@ async function scrapeWiki (email) {
     } catch (error) {throw error}
 }
 
-scrapeWiki('prescottbph@gmail.com')
-
-
 
 app.listen(port)
 
