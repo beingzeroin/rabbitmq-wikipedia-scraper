@@ -20,6 +20,8 @@ async function getEmailBatch () {
     } catch (error) { throw error }
 }
 
+storeSearch('keithcjones21@gmail.com', false)
+
 module.exports = {
     createTables,
     storeSearch,

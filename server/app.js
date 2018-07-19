@@ -6,6 +6,7 @@ const app = express()
 const port = process.env.PORT || 5000
 const db = require('./database/databaseFunctions')
 const rabbitMQ = require('./rabbitmq/producer')
+const mailer = require('./handlers/dailyEmailBatch')
 
 
 db.createTables()
@@ -25,6 +26,14 @@ async function scrapeWiki (email) {
         await rabbitMQ.publishDBMessage(email)
     } catch (error) {throw error}
 }
+
+async function processDailyEmail () {
+    try {
+        await mailer.getEmails()
+    } catch (error) { throw error }
+}
+
+const dailyEmailTime = setInterval(processDailyEmail, 600000)
 
 
 app.listen(port)
