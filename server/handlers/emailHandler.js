@@ -1,52 +1,50 @@
 require('dotenv').config()
 const nodemailer = require('nodemailer')
+const adminEmail = process.env.EMAIL_ADDRESS
+const adminPass = process.env.EMAIL_PASS
 
 
-function sendEmail (mailHTML, emailAddress) {
-    nodemailer.createTestAccount((error, account) => {
-        let transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                user: process.env.EMAIL_ADDRESS,
-                pass: process.env.EMAIL_PASS
+async function sendEmail (mailHTML, emailAddress) {
+    try {
+            const transporter = await nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                    user: adminEmail,
+                    pass: adminPass
+                }})
+            const mailOptions = {
+                from: '<wikibot>',
+                to: emailAddress,
+                subject: 'Wikipedia Random Email',
+                html: mailHTML
             }
-        })
-        let mailOptions = {
-            from: '<wikibot>',
-            to: emailAddress,
-            subject: 'Wikipedia Random Email',
-            html: mailHTML
+            return transporter.sendMail(mailOptions)
+        } catch (error) {
+            throw error
         }
-        transporter.sendMail(mailOptions, (error, info) => {
-            if (error) {
-                return console.log(error)
-            }
-        })
-    })
 }
 
-function welcomeEmail (emailAddress) {
-    nodemailer.createTestAccount((error, account) => {
-        let transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                user: process.env.EMAIL_ADDRESS,
-                pass: process.env.EMAIL_PASS
+
+async function welcomeEmail (emailAddress) {
+    try {
+            const transporter = await nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                    user: adminEmail,
+                    pass: adminPass
+                }})
+            const mailOptions = {
+                from: '<wikibot>',
+                to: emailAddress,
+                subject: 'Welcome to WikiMailer',
+                html: '<h1>Welcome to the WikiMailer!</h1><p>We are so glad you have chosen to sign up! Every morning you will receive a random wikipedia article. Have fun and enjoy going down a Wikipedia rabbit trail!</p><h4>Unsubscribe</h4>'
             }
-        })
-        let mailOptions = {
-            from: '<wikibot>',
-            to: emailAddress,
-            subject: 'Welcome to WikiMailer',
-            html: '<h1>Welcome to the WikiMailer!</h1><p>We are so glad you have chosen to sign up! Every morning you will receive a random wikipedia article. Have fun and enjoy going down a Wikipedia rabbit trail!</p><h4>Unsubscribe</h4>'
-        }
-        transporter.sendMail(mailOptions, (error, info) => {
-            if (error) {
-                return console.log(error)
-            }
-        })
-    })
+            return transporter.sendMail(mailOptions)
+        } catch (error) { 
+            throw error
+    }
 }
+    
 
 
 

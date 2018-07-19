@@ -5,7 +5,10 @@
         <h6 class='email-header'>Enter Email</h6>
             <div>
                 <input v-model='email' type="text" id='email'>
-                <button @click='sendEmail(email)' type="submit">Submit</button>
+                <button @click='sendEmail(email)' v-on:click="seen = !seen" type="submit">Submit</button>
+                <div id="hider">
+                    <p class='thanks' v-if="seen">Thank You for Signing Up!</p>
+                </div>
             </div>
     </div>
     
@@ -18,7 +21,8 @@ export default {
     props: [],
     data() {
         return {
-            email: ''
+            email: '',
+            seen: false
         }
     },
     methods: {
@@ -26,6 +30,7 @@ export default {
             const URL = `http://localhost:5000/${email}`
             fetch(URL)
                 .then(response => response.json({ message: 'Thanks for signing up!' }))
+                .then(this.email = '')
         }
     }
 }
@@ -44,6 +49,10 @@ export default {
 
 .subtitle {
     padding-top: 20px;
+}
+
+.thanks {
+    color: darkgreen;
 }
 
 </style>

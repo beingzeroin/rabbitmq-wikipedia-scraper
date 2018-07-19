@@ -2,19 +2,21 @@ const cheerio = require('cheerio')
 const fetch = require('node-fetch')
 
 const URL = 'https://en.wikipedia.org/wiki/Special:Random'
-let searchURL = ''
 
-function scrapeWikipedia (message) {
-    return fetch(URL)
-    .then(response => {
-        searchURL = response.url
-        return response.text()})
-        .then(body => {
-            return getResults(body)})
+
+
+async function scrapeWikipedia () {
+    try {
+        const response = await fetch(URL)
+        const searchURL = response.url
+        const body = await response.text()
+        return getResults(searchURL, body)
+    } catch (error) {
+        console.log(error)
+    }
 }
 
-
-function getResults (body) {
+function getResults (searchURL, body) {
     const $ = cheerio.load(body)
     const result = $('#bodyContent')
     const heading = $('#firstHeading').text()
@@ -26,11 +28,11 @@ function getResults (body) {
 }
 
 function formatResultsToHTML (resultObject) {
-    let bodyOfHTML = `<h3>${resultObject.heading}</h3>`
-    bodyOfHTML += `<a href="${resultObject.link}">${resultObject.link}</a>`
-    bodyOfHTML += `<img src=${resultObject.images}></img>`
-    bodyOfHTML += `<p>${resultObject.firstParagraph}</p>`
-    return bodyOfHTML
+    let bodyofHTML = `<h3>${resultObject.heading}</h3>`
+    bodyofHTML += `<a href="${resultObject.link}">${resultObject.link}</a>`
+    bodyofHTML += `<img src=${resultObject.images}></img>`
+    bodyofHTML += `<p>${resultObject.firstParagraph}</p>`
+    return bodyofHTML
 }
 
 module.exports = {

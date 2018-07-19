@@ -14,11 +14,11 @@ rabbot.handle('DB Request', (message) => {
   } catch (error) { message.nack() }
 })
 
-rabbot.handle('Email Request', (message) => {
+rabbot.handle('Email Request', async (message) => {
   try {
-    mail.sendEmail(message.body.html, message.body.emailAddress)
+    await mail.sendEmail(message.body.html, message.body.emailAddress)
     message.ack()
-  } catch (error) { message.nack()}
+  } catch (error) { message.reject()}
 })
 
 rabbot.handle('Scrape Request', (message) => {
