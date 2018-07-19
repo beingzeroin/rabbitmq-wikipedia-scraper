@@ -10,16 +10,6 @@ module.exports = {
     }
   }, 
   {
-    name      : 'RabbitMQ Producer',
-    script    : './rabbitmq/config.js',
-    env: {
-      NODE_ENV: 'development'
-    },
-    env_production : {
-      NODE_ENV: 'production'
-    }
-  },
-  {
     name      : 'RabbitMQ Worker',
     script    : './rabbitmq/worker.js',
     env: {
