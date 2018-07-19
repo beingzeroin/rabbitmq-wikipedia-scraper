@@ -2,16 +2,19 @@ const db = require('../database/databaseFunctions')
 const rabbitMQ = require('../rabbitmq/producer')
 
 
-function getEmails () {
-    return db.getEmailBatch()
-        .then(rows => rows.forEach(result => sendEmailToRabbitQueues(result.emailaddress)))
+async function getEmails () {
+    try {
+        const rows = await db.getEmailBatch()
+        rows.forEach(result => sendEmailToRabbitQueues(result.emailaddress))
+    } catch (error) { throw error }
 }
 
-function sendEmailToRabbitQueues (email) {
-    rabbitMQ.publishScrapeRequest(email)
+async function sendEmailToRabbitQueues (email) {
+    try {
+        await rabbitMQ.publishScrapeRequest(email)
+    } catch (error) { throw error }
 }
 
-getEmails()
 
 module.exports = {
     getEmails
