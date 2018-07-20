@@ -24,6 +24,7 @@ rabbot.handle('Email Request', async (message) => {
   try {
       const msg = await checkIfDuplicate(message)
       if (msg) {
+        console.log(msg.properties.messageId)
         await mail.sendEmail(msg.body.html, msg.body.emailAddress)
         message.ack() }
   } catch (error) { message.nack() }
@@ -49,6 +50,7 @@ async function checkIfDuplicate (message) {
         await redis.set(`${message.properties.messageId}`, 'any value')
         return message
       } else { 
+        console.log('found duplicate', message.properties.messageId)
         message.ack() }
     } catch (error) { throw error }
 }

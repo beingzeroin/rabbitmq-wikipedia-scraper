@@ -28,12 +28,14 @@ async function scrapeWiki (email) {
 }
 
 async function processDailyEmail () {
+    console.log('i should have sent to my list here')
     try {
         await mailer.getEmails()
     } catch (error) { throw error }
 }
 
-// const dailyEmailTime = setInterval(processDailyEmail, 600000)
+
+// const dailyEmailTime = setInterval(processDailyEmail, 60000)
 
 
 app.listen(port)
