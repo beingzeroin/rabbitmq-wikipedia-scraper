@@ -5,30 +5,53 @@ const rabbitMQ = require('./producer')
 const mail = require('../handlers/emailHandler')
 const db = require('../database/databaseFunctions')
 const config = require('./rabbitConfig').setup
+const Redis = require('ioredis')
+const redis = new Redis()
+
 
 
 rabbot.handle('DB Request', async (message) => {
   try {
-    await db.storeSearch(message.body.email, 'false')
-    message.ack()
+    const msg = await checkIfDuplicate(message)
+    if (msg) {
+      await db.storeSearch(msg.body.email, false)
+      message.ack() }
   } catch (error) { message.nack() }
 })
+
 
 rabbot.handle('Email Request', async (message) => {
   try {
-    await mail.sendEmail(message.body.html, message.body.emailAddress)
-    message.ack()
+      const msg = await checkIfDuplicate(message)
+      if (msg) {
+        await mail.sendEmail(msg.body.html, msg.body.emailAddress)
+        message.ack() }
   } catch (error) { message.nack() }
 })
 
+
 rabbot.handle('Scrape Request', async (message) => {
   try {
-    const email = message.body.emailAddress
-    const results = await wiki.scrapeWikipedia()
-    await rabbitMQ.publishEmailMessage(results, email)
-    message.ack()
-  } catch (error) { message.nack()}
+    const msg = await checkIfDuplicate(message)
+    if (msg) {
+      const email = msg.body.emailAddress
+      const results = await wiki.scrapeWikipedia()
+      await rabbitMQ.publishEmailMessage(results, email)
+      message.ack() }
+  } catch (error) { message.nack() }
 })
+
+
+async function checkIfDuplicate (message) {
+  try {
+      const check = await redis.get(`${message.properties.messageId}`)
+      if (check == null) {
+        await redis.set(`${message.properties.messageId}`, 'any value')
+        return message
+      } else { 
+        message.ack() }
+    } catch (error) { throw error }
+}
 
 
 

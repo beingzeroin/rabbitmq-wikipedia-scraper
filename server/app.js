@@ -33,7 +33,7 @@ async function processDailyEmail () {
     } catch (error) { throw error }
 }
 
-const dailyEmailTime = setInterval(processDailyEmail, 600000)
+// const dailyEmailTime = setInterval(processDailyEmail, 600000)
 
 
 app.listen(port)

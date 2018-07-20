@@ -4,6 +4,7 @@ const uuid = require('uuid')
 
 
 
+
 async function publishEmailMessage (html, emailAddress) {
     try {
         await rabbot.publish('e.email', { type: 'Email Request', body: {html, emailAddress}, messageId: uuid.v4() })
@@ -13,7 +14,7 @@ async function publishEmailMessage (html, emailAddress) {
 async function publishScrapeRequest (email) {
     try {
         await rabbot.publish('e.scrape', { type: 'Scrape Request', body: {emailAddress: email}, messageId: uuid.v4() })
-    } catch (error) {throw error}
+    } catch (error) { throw error }
 }
 
 async function publishDBMessage (email) {

@@ -11,9 +11,7 @@ async function scrapeWikipedia () {
         const searchURL = response.url
         const body = await response.text()
         return getResults(searchURL, body)
-    } catch (error) {
-        console.log(error)
-    }
+    } catch (error) { throw error }
 }
 
 function getResults (searchURL, body) {
