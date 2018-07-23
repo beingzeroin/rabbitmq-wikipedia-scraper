@@ -33,7 +33,6 @@ async function processDailyEmail () {
     } catch (error) { throw error }
 }
 
-scrapeWiki('prescottbph@gmail.com')
 
 // const dailyEmailTime = setInterval(processDailyEmail, 60000)
 
