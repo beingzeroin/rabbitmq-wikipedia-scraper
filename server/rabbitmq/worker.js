@@ -15,7 +15,8 @@ rabbot.handle('DB Request', async (message) => {
     const msg = await checkIfDuplicate(message)
     if (msg) {
       await db.storeSearch(msg.body.email, false)
-      message.ack() }
+      message.ack() 
+    } message.ack()
   } catch (error) { message.nack() }
 })
 
@@ -24,9 +25,10 @@ rabbot.handle('Email Request', async (message) => {
   try {
       const msg = await checkIfDuplicate(message)
       if (msg) {
-        console.log(msg.properties.messageId)
         await mail.sendEmail(msg.body.html, msg.body.emailAddress)
-        message.ack() }
+        message.ack() 
+      }
+      message.ack() 
   } catch (error) { message.nack() }
 })
 
@@ -38,7 +40,9 @@ rabbot.handle('Scrape Request', async (message) => {
       const email = msg.body.emailAddress
       const results = await wiki.scrapeWikipedia()
       await rabbitMQ.publishEmailMessage(results, email)
-      message.ack() }
+      message.ack()
+    }
+    message.ack() 
   } catch (error) { message.nack() }
 })
 
@@ -51,7 +55,7 @@ async function checkIfDuplicate (message) {
         return message
       } else { 
         console.log('found duplicate', message.properties.messageId)
-        message.ack() }
+      }
     } catch (error) { throw error }
 }
 

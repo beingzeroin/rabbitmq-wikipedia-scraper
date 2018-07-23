@@ -10,14 +10,13 @@ RabbitMQ is used to queue scraping, emailing, and database reads/writes. PM2 is 
 - [RabbitMQ](https://www.rabbitmq.com/) - For queueing and then processing scrape and email tasks
 - [PM2](http://pm2.keymetrics.io/) - For running both the Express server as well as the RabbitMQ server and load balancing
 - [PostgreSQL](https://www.postgresql.org/) - Database
+- [Redis](https://redis.io/) - In memory database used to verify RabbitMQ messages are unique
 - [Express](https://expressjs.com/) - Web server for receiving search requests
 - [Nodemailer.js](https://nodemailer.com/about/) - npm library for sending emails from a Node.js server
 - [Vue.js](https://vuejs.org/) - front end framework used to build a simple client side application
 
-<img src="https://raw.githubusercontent.com/brandonhenning/rabbitmq-wikipedia-scraper/master/screenshots/tech-stack.png" width="700" height="350">
+<img src="https://raw.githubusercontent.com/brandonhenning/rabbitmq-wikipedia-scraper/master/screenshots/techstack.png" width="700" height="350">
 
 #### Issues in Progress
-1) Find better ways to break the code, and make sure messages are being noacked to their respective queues if not processed correctly. 
-2) Add some persistant store for message ids, possibly uuid or Redis
-3) Make the app completely stateless so it can be deployed to Kubernetes or something similar
-4) Have the application check the database for each email to ensure it hasn't already signed up
+1) Make the app completely stateless so it can be deployed to Kubernetes or something similar
+2) Have the application check the database for each email to ensure it hasn't already signed up

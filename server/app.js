@@ -28,12 +28,12 @@ async function scrapeWiki (email) {
 }
 
 async function processDailyEmail () {
-    console.log('i should have sent to my list here')
     try {
         await mailer.getEmails()
     } catch (error) { throw error }
 }
 
+scrapeWiki('prescottbph@gmail.com')
 
 // const dailyEmailTime = setInterval(processDailyEmail, 60000)
 
