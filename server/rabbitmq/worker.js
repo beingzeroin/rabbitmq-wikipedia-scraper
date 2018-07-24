@@ -15,8 +15,8 @@ rabbot.handle('DB Request', async (message) => {
     const msg = await checkIfDuplicate(message)
     if (msg) {
       await db.storeSearch(msg.body.email, false)
-      message.ack() 
-    } message.ack()
+      message.ack()
+    }   message.ack()
   } catch (error) { message.nack() }
 })
 
@@ -26,7 +26,7 @@ rabbot.handle('Email Request', async (message) => {
       const msg = await checkIfDuplicate(message)
       if (msg) {
         await mail.sendEmail(msg.body.html, msg.body.emailAddress)
-        message.ack() 
+        message.ack()
       }
       message.ack() 
   } catch (error) { message.nack() }
@@ -39,12 +39,13 @@ rabbot.handle('Scrape Request', async (message) => {
     if (msg) {
       const email = msg.body.emailAddress
       const results = await wiki.scrapeWikipedia()
-      await rabbitMQ.publishEmailMessage(results, email)
+      const final = await rabbitMQ.publishEmailMessage(results, email)
       message.ack()
     }
     message.ack() 
   } catch (error) { message.nack() }
 })
+
 
 
 async function checkIfDuplicate (message) {
@@ -54,7 +55,7 @@ async function checkIfDuplicate (message) {
         await redis.set(`${message.properties.messageId}`, 'any value')
         return message
       } else { 
-        console.log('found duplicate', message.properties.messageId)
+        console.log('found duplicate = ', message.properties.messageId)
       }
     } catch (error) { throw error }
 }

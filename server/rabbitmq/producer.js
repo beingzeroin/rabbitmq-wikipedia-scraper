@@ -7,6 +7,7 @@ const uuid = require('uuid')
 
 async function publishEmailMessage (html, emailAddress) {
     try {
+        console.log('publishing email request in producer.js')
         await rabbot.publish('e.email', { type: 'Email Request', body: {html, emailAddress}, messageId: uuid.v4() })
     } catch (error) {throw error}
 }
