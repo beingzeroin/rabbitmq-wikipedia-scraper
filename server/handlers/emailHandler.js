@@ -9,8 +9,8 @@ async function sendEmail (mailHTML, emailAddress) {
             const transporter = await nodemailer.createTransport({
                 service: 'gmail',
                 auth: {
-                    user: 'craigslist.bot.bph@gmail.com',
-                    pass: 'freeballin'
+                    user: adminEmail,
+                    pass: adminPass
                 }})
             const mailOptions = {
                 from: '<wikibot>',

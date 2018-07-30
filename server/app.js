@@ -33,9 +33,6 @@ async function processDailyEmail () {
     } catch (error) { throw error }
 }
 
-db.storeSearch('bobth3bum@gmail.com')
-db.storeSearch('prescott.henning@gmail.com')
-
 // idempotency get db query making sure that they have not been emailed yet today
 // talk about idempotency in presentation to say even if someone has signed up 10 times they will only receive one email
 
